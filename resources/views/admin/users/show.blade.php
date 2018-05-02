@@ -1,8 +1,19 @@
 @extends('blank')
 
-@section('content')
+{{-- Menu Breadcrumb --}}
+@section('breadcrumb')
+    <a class="btn" href="{{ route('users.destroy', [ $user->id]) }}" onclick="event.preventDefault();confirmDeletion();"><i class="icon-trash"></i> Hapus</a>
+    <a class="btn" href="{{ route('users.edit', [ $user->id]) }}"><i class="icon-pencil"></i> Edit</a>
+    <a class="btn" href="{{ route('users.index') }}"><i class="icon-list"></i> List</a>
 
-<!--/.col-->
+    <form style="display: none" action="{{ route('users.destroy', [$user->id]) }}" method="post" id="form-delete">
+        @csrf
+        @method('delete')
+    </form>
+@endsection
+
+{{-- Content Utama --}}
+@section('content')
 <div class="row">
     <div class="col-md-12">
         
@@ -57,3 +68,13 @@
     </div>
 </div>
 @endsection
+
+@push('javascript')
+<script>
+    function confirmDeletion(){
+        if(confirm('Anda yakin akan menghapus user ini?')){
+            form = document.querySelector('form-delete');
+            form.submit();
+        }
+    }
+</script>

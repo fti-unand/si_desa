@@ -19,8 +19,9 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::all()->pluck('name', 'id');
+        $user_roles = null;
 
-        return view('admin.users.create', compact('roles'));
+        return view('admin.users.create', compact('roles', 'user_roles'));
     }
 
     public function store(Request $request)
@@ -34,12 +35,29 @@ class UserController extends Controller
 
         $user = new User();
         $user->username = $request->input('username');
+        $user->name = $request->input('name');
+        $user->type = 3;
         $user->password = bcrypt($request->input('password'));
         $user->email = $request->input('email');
 
         if ($request->hasFile('avatar') && $request->input('avatar')->isvalid()) {
-            $fileExtension = $request->input('avatar')->getOriginalFileExtension();
-            $user->avatar = $request->input('avatar')->storeAs('img/avatars', uniqid() . '.' . $fileExtension);
+            $path = config('central.path.avatars');
+
+            $fileext = $request->photo->extension();
+            $filename = uniqid("avatars-") . '.' . $fileext;
+
+            //Real File
+            $filepath = $request->file('photo')->storeAs($path, $filename, 'local');
+
+            //Avatar File
+            $realpath = storage_path('app/' . $filepath);
+            Image::make($realpath)
+                ->resize(null, 100, function ($constraint) {
+                    $constraint->aspectRatio();
+                })
+                ->save(public_path(config('central.path.avatars') . '/' . $filename));
+
+            $user->avatar = $filename;
         }
 
         if ($user->save()) {
@@ -62,7 +80,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        $user_roles = $user->getRoleNames();
+        $user_roles = $user->roles->first()->id;
         $roles = Role::all()->pluck('name', 'id');
 
         return view('admin.users.edit', compact('user', 'roles', 'user_roles'));
@@ -78,20 +96,40 @@ class UserController extends Controller
 
         $user = User::find($id);
         $user->username = $request->input('username');
+        $user->name = $request->input('name');
+        $user->type = 3;
         $user->password = bcrypt($request->input('password'));
         $user->email = $request->input('email');
 
         if ($request->hasFile('avatar') && $request->input('avatar')->isvalid()) {
             $oldFile = $user->avatar;
 
-            $fileExtension = $request->input('avatar')->getOriginalFileExtension();
-            $user->avatar = $request->input('avatar')->storeAs('img/avatars', uniqid() . '.' . $fileExtension);
-            File::delete('img/avatar/' . $oldFile);
+            $path = config('central.path.avatars');
+
+            $fileext = $request->photo->extension();
+            $filename = uniqid("avatars-") . '.' . $fileext;
+
+            //Real File
+            $filepath = $request->file('photo')->storeAs($path, $filename, 'local');
+
+            //Avatar File
+            $realpath = storage_path('app/' . $filepath);
+            Image::make($realpath)
+                ->resize(null, 100, function ($constraint) {
+                    $constraint->aspectRatio();
+                })
+                ->save(public_path(config('central.path.avatars') . '/' . $filename));
+
+            $user->avatar = $filename;
+
+            //Hapus avatar & Photo
+            File::delete($realpath.'/' . $oldFile);
+            File::delete(storage_path($path) . '/' . $oldFile);
         }
 
         if ($user->save()) {
             toast()->success('Berhasil memperbaharui data user');
-            $user->assignRole($request->input('role'));
+            $user->syncRoles([$request->input('role')]);
             return redirect()->route('users.index');
         } else {
             toast()->error('Data user tidak dapat diperbaharui');
@@ -111,6 +149,30 @@ class UserController extends Controller
         $user->delete();
         toast()->success('Data user berhasil dihapus');
 
+        return redirect()->route('users.index');
+    }
+
+    public function activate($id)
+    {
+        $user = User::find($id);
+        $user->status = 1;
+        if ($user->save()) {
+            toast()->success('Berhasil mengaktifkan user '.$user->username);
+        } else {
+            toast()->danger('Gagal mengaktifkan user '.$user->username);
+        }
+        return redirect()->route('users.index');
+    }
+
+    public function deactivate($id)
+    {
+        $user = User::find($id);
+        $user->status = 0;
+        if ($user->save()) {
+            toast()->success('Berhasil menonaktifkan user ' . $user->username);
+        } else {
+            toast()->danger('Gagal menonaktifkan user ' . $user->username);
+        }
         return redirect()->route('users.index');
     }
 }

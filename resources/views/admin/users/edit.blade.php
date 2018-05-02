@@ -1,8 +1,12 @@
 @extends('blank')
 
-@section('content')
+{{-- Menu Breadcrumb --}}
+@section('breadcrumb')
+    <a class="btn" href="{{ route('users.index') }}"><i class="icon-list"></i> List</a>
+@endsection
 
-<!--/.col-->
+{{-- Content Utama --}}
+@section('content')
 <div class="row">
     <div class="col-md-12"> 
         <div class="card">

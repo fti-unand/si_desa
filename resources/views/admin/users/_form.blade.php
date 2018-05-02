@@ -19,6 +19,11 @@
 </div>
 
 <div class="form-group">
+    <label for="role">Role</label>
+    {{ Form::select('role',$roles, $user_roles, ['class' => 'form-control'])}}
+</div>
+
+<div class="form-group">
     <label for="password">Password</label>
     {{ Form::file('avatar', ['class' => 'form-control']) }}
 </div>

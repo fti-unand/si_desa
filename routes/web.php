@@ -27,8 +27,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('password', 'ProfileController@storepassword')->name('password.store');
     Route::patch('profile/picture', 'ProfileController@profilePicture')->name('profile.picture');
 
-    Route::post('users/deactivate', 'UserController@deactivate')->name('users.deactivate');
-    Route::post('users/activate', 'UserController@activate')->name('users.activate');
+    Route::post('users/deactivate/{id}', 'UserController@deactivate')->name('users.deactivate');
+    Route::post('users/activate/{id}', 'UserController@activate')->name('users.activate');
     Route::resource('users', 'UserController');
 });
 

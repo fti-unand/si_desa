@@ -1,13 +1,17 @@
 @extends('blank')
 
-@section('content')
+{{-- Menu Breadcrumb --}}
+@section('breadcrumb')
+    <a class="btn" href="{{ route('users.index') }}"><i class="icon-list"></i> List </a>
+@endsection
 
-<!--/.col-->
+{{-- Content Utama --}}
+@section('content')
 <div class="row">
     <div class="col-md-12"> 
         <div class="card">
             
-            {!! Form::open(['route' => 'users.store', 'method' => 'put'] ) !!}
+            {!! Form::open(['route' => 'users.store', 'method' => 'post'] ) !!}
             
             <div class="card-header">
                 <i class="fa fa-align-justify"></i> Tambah User

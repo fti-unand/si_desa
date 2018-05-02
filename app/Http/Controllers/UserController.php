@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Spatie\Permission\Models\Role;
+use Illuminate\Http\File;
 
 class UserController extends Controller
 {
@@ -19,7 +20,7 @@ class UserController extends Controller
     {
         $roles = Role::all()->pluck('name', 'id');
 
-        return view('admin.user.create', compact('roles'));
+        return view('admin.users.create', compact('roles'));
     }
 
     public function store(Request $request)
@@ -36,13 +37,18 @@ class UserController extends Controller
         $user->password = bcrypt($request->input('password'));
         $user->email = $request->input('email');
 
+        if ($request->hasFile('avatar') && $request->input('avatar')->isvalid()) {
+            $fileExtension = $request->input('avatar')->getOriginalFileExtension();
+            $user->avatar = $request->input('avatar')->storeAs('img/avatars', uniqid() . '.' . $fileExtension);
+        }
+
         if ($user->save()) {
             toast()->success('Berhasil menambahkan data user');
             $user->assignRole($request->input('role'));
-            return redirect()->route('user.index');
+            return redirect()->route('users.index');
         } else {
             toast()->error('Data user tidak dapat ditambahkan');
-            return redirect()->route('user.create');
+            return redirect()->route('users.create');
         }
     }
 
@@ -75,13 +81,21 @@ class UserController extends Controller
         $user->password = bcrypt($request->input('password'));
         $user->email = $request->input('email');
 
+        if ($request->hasFile('avatar') && $request->input('avatar')->isvalid()) {
+            $oldFile = $user->avatar;
+
+            $fileExtension = $request->input('avatar')->getOriginalFileExtension();
+            $user->avatar = $request->input('avatar')->storeAs('img/avatars', uniqid() . '.' . $fileExtension);
+            File::delete('img/avatar/' . $oldFile);
+        }
+
         if ($user->save()) {
             toast()->success('Berhasil memperbaharui data user');
             $user->assignRole($request->input('role'));
-            return redirect()->route('user.index');
+            return redirect()->route('users.index');
         } else {
             toast()->error('Data user tidak dapat diperbaharui');
-            return redirect()->route('user.edit', ['id' => $user->id]);
+            return redirect()->route('users.edit', ['id' => $user->id]);
         }
     }
 
@@ -97,6 +111,6 @@ class UserController extends Controller
         $user->delete();
         toast()->success('Data user berhasil dihapus');
 
-        return redirect()->route('user.index');
+        return redirect()->route('users.index');
     }
 }

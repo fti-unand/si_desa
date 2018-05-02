@@ -8,23 +8,13 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $users = User::all();
-        
+
         return view('admin.users.index', compact('users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $roles = Role::all()->pluck('name', 'id');
@@ -32,12 +22,6 @@ class UserController extends Controller
         return view('admin.user.create', compact('roles'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -51,7 +35,7 @@ class UserController extends Controller
         $user->username = $request->input('username');
         $user->password = bcrypt($request->input('password'));
         $user->email = $request->input('email');
-   
+
         if ($user->save()) {
             toast()->success('Berhasil menambahkan data user');
             $user->assignRole($request->input('role'));
@@ -62,42 +46,22 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $user = User::find($id);
-        $roles = $user->getRolesName();
-
-        return view('admin.user.show', compact('user', 'roles'));
+        $roles = $user->getRoleNames();
+        return view('admin.users.show', compact('user', 'roles'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $user = User::find($id);
-        $user_roles = $user->getRolesName();
+        $user_roles = $user->getRoleNames();
         $roles = Role::all()->pluck('name', 'id');
 
-        return view('admin.user.edit', compact('user', 'roles', 'user_roles'));
+        return view('admin.users.edit', compact('user', 'roles', 'user_roles'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $request->validate([

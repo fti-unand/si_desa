@@ -28,21 +28,27 @@
 
                             <td class="text-center">
                                 @if($user->status == 1)
-                                    <span class="badge badge-success">Aktif</span>
+                                    <a href="{{ route('users.deactivate', [$user->id]) }}" class="btn btn-sm btn-outline-primary">
+                                        Aktif (NonAktifkan)
+                                    </a>
                                 @else
-                                    <span class="badge badge-secondary">Non Aktif</span>
+                                    <a href="{{ route('users.activate', [$user->id]) }}" class="btn btn-sm btn-outline-primary">
+                                        Nonaktif (NonAktifkan)
+                                    </a>
                                 @endif
                             </td>
 
                             <td class="text-center">
-                                <a href="{{ route('users.show', [$user->id]) }}" class="btn btn-sm btn-outline-primary">Edit</a>
-                                <a href="{{ route('users.edit', [$user->id]) }}" class="btn btn-sm btn-outline-primary">Edit</a>
-                                <button onclick="event.preventDefault();deleteUser({{$user->id}});" class="btn btn-sm btn-outline-danger">Hapus</button>
-                                @if($user->status == 1)
-                                    <a href="{{ route('users.deactivate', [$user->id]) }}" class="btn btn-sm btn-outline-primary">NonAktifkan</a>
-                                @else
-                                    <a href="{{ route('users.activate', [$user->id]) }}" class="btn btn-sm btn-outline-primary">NonAktifkan</a>
-                                @endif
+                                <a href="{{ route('users.show', [$user->id]) }}" class="btn btn-sm btn-outline-primary">
+                                    <i class="fa fa-eye"> </i>
+                                </a>
+                                <a href="{{ route('users.edit', [$user->id]) }}" class="btn btn-sm btn-outline-primary">
+                                    <i class="fa fa-pencil"> </i>
+                                </a>
+                                <button onclick="event.preventDefault();deleteUser({{$user->id}});" class="btn btn-sm btn-outline-danger">
+                                    <i class="fa fa-trash"> </i>
+                                </button>
+                                
                             </td>
 
                         </tr>

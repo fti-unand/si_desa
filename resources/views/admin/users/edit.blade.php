@@ -12,9 +12,9 @@
             </div>
 
             <div class="card-body">
-                <form>
+                {!! Form::open(['route' => ['users.update', $user->id], 'method' => 'put'] ) !!}
 
-                </form>
+                {{ Form::close() }}
             </div>
 
         </div>

@@ -2,7 +2,7 @@
 
 {{-- Menu Breadcrumb --}}
 @section('breadcrumb')
-    <a class="btn" href="{{ route('users.index') }}"><i class="icon-list"></i> List</a>
+    <a class="btn" href="{{ route('pendidikans.index') }}"><i class="icon-list"></i> List</a>
 @endsection
 
 {{-- Content Utama --}}
@@ -11,15 +11,15 @@
     <div class="col-md-12"> 
         <div class="card">
 
-            {!! Form::model($user, ['route' => ['users.update', $user->id], 'files' => true, 'method' => 'patch'] ) !!}
+            {!! Form::model($pendidikan, ['route' => ['pendidikans.update', $pendidikan->id], 'method' => 'patch'] ) !!}
 
             <div class="card-header">
-                <i class="fa fa-align-justify"></i> Update User
+                <i class="fa fa-align-justify"></i> Update Pendidikan
             </div>
 
             <div class="card-body">    
 
-                    @include('admin.users._form')
+                    @include('admin.pendidikan._form')
 
             </div>
 

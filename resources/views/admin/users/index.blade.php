@@ -1,6 +1,5 @@
 @extends('blank')
 
-
 {{-- Menu Breadcrumb --}}
 @section('breadcrumb')
 <a class="btn" href="{{ route('users.create') }}"><i class="icon-plus"></i> Tambah</a>

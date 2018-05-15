@@ -7,4 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Agama extends Model
 {
     protected $table = 'agama';
+
+    protected $fillable =[
+        'id',
+        'nama'
+    ];
+
+    public function penduduk(){
+      return $this->hasMany('App\Models\Penduduk');
+    }
 }

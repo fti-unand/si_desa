@@ -40,8 +40,9 @@ class PendudukController extends Controller
         $agama = Agama::select('id', 'nama')->pluck('nama', 'id')->sortBy('nama');
         $hubungan_keluarga = HubunganKeluarga::select('id', 'nama')->pluck('nama', 'id')->sortBy('nama');
         $p = Penduduk::select('id', 'nik','nama')->pluck('nik','nama', 'id')->sortBy('nama');
-      //  $ayah = DB::table('select * from penduduk where nama= ?',array('jenis_kelamin'));
-        return view('penduduk.create', compact('ayah','kartu_keluarga','status_penduduk', 'status_perkawinan', 'agama', 'hubungan_keluarga','p'));
+        $ayah = Penduduk::where('jenis_kelamin','=','1')->pluck('nama','nik','id');
+        $ibu = Penduduk::where('jenis_kelamin','=','2')->pluck('nama','nik','id');
+        return view('penduduk.create', compact('ibu','ayah','kartu_keluarga','status_penduduk', 'status_perkawinan', 'agama', 'hubungan_keluarga','p'));
     }
 
     /**
@@ -52,6 +53,26 @@ class PendudukController extends Controller
      */
     public function store(Request $request)
     {
+      $request->validate([
+
+        'kartu_keluarga_id'=> 'required',
+        'nik'=> 'required',
+        'nama'=> 'required',
+        'tempat_lahir'=> 'required',
+        'tanggal_lahir'=> 'required',
+        'tanggal_meninggal',
+        'jenis_kelamin'=> 'required',
+        'kewarganegaraan'=> 'required',
+        'photo',
+        'status_perkawinan_id'=> 'required',
+        'status_penduduk_id'=> 'required',
+        'agama_id'=> 'required',
+        'hubungan_keluarga_id'=> 'required',
+        'ayah_id'=> 'required',
+        'ibu_id'=> 'required'
+          
+      ]);
+
         $penduduk = new Penduduk();
         $penduduk->nik = $request->nik;
         $penduduk->kartu_keluarga_id = $request->kartu_keluarga_id;
@@ -107,8 +128,9 @@ class PendudukController extends Controller
         $agama = Agama::select('id', 'nama')->pluck('nama', 'id')->sortBy('nama');
         $hubungan_keluarga = HubunganKeluarga::select('id', 'nama')->pluck('nama', 'id')->sortBy('nama');
         $penduduk = Penduduk::find($penduduk->id);
-        $p = Penduduk::pluck('nama','id');
-        return view('penduduk.edit',['penduduk'=> $penduduk],compact('p','kartu_keluarga','status_penduduk', 'status_perkawinan', 'agama', 'hubungan_keluarga'));
+        $ayah = Penduduk::where('jenis_kelamin','=','1')->pluck('nama','nik','id');
+        $ibu = Penduduk::where('jenis_kelamin','=','2')->pluck('nama','nik','id');
+        return view('penduduk.edit',['penduduk'=> $penduduk],compact('ayah','ibu','kartu_keluarga','status_penduduk', 'status_perkawinan', 'agama', 'hubungan_keluarga'));
     }
 
     /**

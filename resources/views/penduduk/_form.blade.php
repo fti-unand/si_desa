@@ -1,5 +1,4 @@
 
-
 <div class="form-group">
     <label for="nik">NIK</label>
       {{ Form::text('nik', null, ['class' => 'form-control'])}}
@@ -67,10 +66,10 @@
 
 <div class="form-group">
     <label for="ayah_id">Ayah</label>
-    {{ Form::select('ayah_id', $p, null, [ 'class' => 'form-control', 'placeholder' => 'Pilih Id Ayah...'])}}
+    {{ Form::select('ayah_id', $ayah, null, [ 'class' => 'form-control', 'placeholder' => 'Pilih Id Ayah...'])}}
 </div>
 
 <div class="form-group">
     <label for="ibu_id">Ibu</label>
-    {{ Form::select('ibu_id', $p, null, [ 'class' => 'form-control', 'placeholder' => 'Pilih Id Ibu ...'])}}
+    {{ Form::select('ibu_id', $ibu, null, [ 'class' => 'form-control', 'placeholder' => 'Pilih Id Ibu ...'])}}
 </div>

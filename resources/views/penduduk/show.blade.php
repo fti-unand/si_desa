@@ -2,7 +2,7 @@
 
 {{-- Menu Breadcrumb --}}
 @section('breadcrumb')
-    <a class="btn" href="{{ route('penduduk.destroy', [ $penduduk->id]) }}" onclick="event.preventDefault();confirmDeletion();"><i class="icon-trash"></i> Hapus</a>
+    <a class="btn" onclick="event.preventDefault();confirmDeletion('{{ route('penduduk.destroy', [$penduduk->id]) }}');"><i class="icon-trash"></i> Hapus</a>
     <a class="btn" href="{{ route('penduduk.edit', [ $penduduk->id]) }}"><i class="icon-pencil"></i> Edit</a>
     <a class="btn" href="{{ route('penduduk.index') }}"><i class="icon-list"></i> List</a>
 
@@ -135,9 +135,10 @@
 
 @push('javascript')
 <script>
-    function confirmDeletion(){
-        if(confirm('Anda yakin akan menghapus penduduk ini?')){
-            form = document.querySelector('form-delete');
+    function confirmDeletion(url){
+        if(confirm('Anda yakin akan menghapus user ini? ')){
+            form = document.querySelector('#form-delete');
+            form.action = url;
             form.submit();
         }
     }

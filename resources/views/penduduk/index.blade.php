@@ -99,11 +99,5 @@
             form.submit();
         }
     }
-
-    function activation(url){
-        form = document.querySelector('#form-activation');
-        form.action = url;
-        form.submit();
-    }
 </script>
 @endpush

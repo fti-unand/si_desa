@@ -26,10 +26,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('password', 'ProfileController@editpassword')->name('password.show');
     Route::patch('password', 'ProfileController@storepassword')->name('password.store');
     Route::patch('profile/picture', 'ProfileController@profilePicture')->name('profile.picture');
-
     Route::post('users/deactivate/{id}', 'UserController@deactivate')->name('users.deactivate');
     Route::post('users/activate/{id}', 'UserController@activate')->name('users.activate');
     Route::resource('users', 'UserController');
+    Route::get('laporan', 'laporanController@index')->name('laporans.index');
+    Route::get('/print{id}','printController@print');
 });
 
 Route::get('image/{type}/{id}', 'FileController@image')->name('get.image');

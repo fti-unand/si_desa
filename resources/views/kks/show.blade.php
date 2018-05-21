@@ -57,9 +57,10 @@
 
 @push('javascript')
 <script>
-    function confirmDeletion(){
+    function confirmDeletion(url){
         if(confirm('Anda yakin akan menghapus kk ini?')){
-            form = document.querySelector('form-delete');
+            form = document.querySelector('#form-delete');
+            form.action = url;
             form.submit();
         }
     }

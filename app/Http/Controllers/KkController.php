@@ -52,7 +52,7 @@ class KkController extends Controller
         $kk->tanggal_kk = $request->input('tanggal_kk');
 
         if ($kk->save()) {
-            toast()->success('Berhasil menambahkan data KK');
+            toast()->success('Berhasil mengubah data KK');
             return redirect()->route('kks.index');
         } else {
             toast()->error('Data KK tidak dapat ditambahkan');

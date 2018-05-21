@@ -40,8 +40,8 @@ class PendudukController extends Controller
         $agama = Agama::select('id', 'nama')->pluck('nama', 'id')->sortBy('nama');
         $hubungan_keluarga = HubunganKeluarga::select('id', 'nama')->pluck('nama', 'id')->sortBy('nama');
         $p = Penduduk::select('id', 'nik','nama')->pluck('nik','nama', 'id')->sortBy('nama');
-        $ayah = Penduduk::where('jenis_kelamin','=','1')->pluck('nama','nik','id');
-        $ibu = Penduduk::where('jenis_kelamin','=','2')->pluck('nama','nik','id');
+        $ayah = Penduduk::where('jenis_kelamin','=','1')->pluck('nama','id');
+        $ibu = Penduduk::where('jenis_kelamin','=','2')->pluck('nama','id');
         return view('penduduk.create', compact('ibu','ayah','kartu_keluarga','status_penduduk', 'status_perkawinan', 'agama', 'hubungan_keluarga','p'));
     }
 
@@ -128,8 +128,8 @@ class PendudukController extends Controller
         $agama = Agama::select('id', 'nama')->pluck('nama', 'id')->sortBy('nama');
         $hubungan_keluarga = HubunganKeluarga::select('id', 'nama')->pluck('nama', 'id')->sortBy('nama');
         $penduduk = Penduduk::find($penduduk->id);
-        $ayah = Penduduk::where('jenis_kelamin','=','1')->pluck('nama','nik','id');
-        $ibu = Penduduk::where('jenis_kelamin','=','2')->pluck('nama','nik','id');
+        $ayah = Penduduk::where('jenis_kelamin','=','1')->pluck('nama','id');
+        $ibu = Penduduk::where('jenis_kelamin','=','2')->pluck('nama','id');
         return view('penduduk.edit',['penduduk'=> $penduduk],compact('ayah','ibu','kartu_keluarga','status_penduduk', 'status_perkawinan', 'agama', 'hubungan_keluarga'));
     }
 

@@ -12,6 +12,11 @@
                     <i class="nav-icon icon-people"></i> Manajemen User
                 </a>
             </li>
+             <li class="nav-item">
+                <a class="nav-link" href="{{ route('fasilitas.index') }}">
+                    <i class="nav-icon icon-people"></i> Fasilitas
+                </a>
+            </li>
         </ul>
     </nav>
     <button class="sidebar-minimizer brand-minimizer" type="button"></button>

@@ -25,11 +25,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('profile', 'ProfileController@update')->name('profile.update');
     Route::get('password', 'ProfileController@editpassword')->name('password.show');
     Route::patch('password', 'ProfileController@storepassword')->name('password.store');
-    Route::patch('profile/picture', 'ProfileController@profilePicture')->name('profile.picture');
+    
+
+    Route::get('password', 'ProfileController@editpassword')->name('password.show');
 
     Route::post('users/deactivate/{id}', 'UserController@deactivate')->name('users.deactivate');
     Route::post('users/activate/{id}', 'UserController@activate')->name('users.activate');
     Route::resource('users', 'UserController');
+   Route::resource('fasilitas', 'fasilitasController');
+     
 });
 
 Route::get('image/{type}/{id}', 'FileController@image')->name('get.image');

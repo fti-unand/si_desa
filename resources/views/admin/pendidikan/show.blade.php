@@ -10,6 +10,9 @@
         @csrf
         @method('delete')
     </form>
+
+
+
 @endsection
 
 {{-- Content Utama --}}
@@ -35,6 +38,12 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label class="col-md-3 col-form-label">Instansi Pendidikan</label>
+                    <div class="col-md-9">
+                        <p class="col-form-label">{{ $pendidikan->nama_institusi }}</p>
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label class="col-md-3 col-form-label">Tahun Mulai</label>
                     <div class="col-md-9">
                         <p class="col-form-label">{{ $pendidikan->tahun_mulai }}</p>
@@ -56,9 +65,11 @@
 @push('javascript')
 <script>
     function confirmDeletion(){
-        if(confirm('Anda yakin akan menghapus pendidikan ini?')){
-            form = document.querySelector('form-delete');
+        if(confirm('Anda yakin akan menghapus pendidikan ini?'))
+        {
+            var form = document.getElementById('form-delete');
             form.submit();
         }
+        
     }
 </script>

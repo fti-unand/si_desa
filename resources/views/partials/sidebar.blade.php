@@ -14,7 +14,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('laporans.index') }}">
-                    <i class="nav-icon icon-people"></i> Cetak KK
+                    <i class="nav-icon icon-speedometer"></i> Laporan
                 </a>
             </li>
         </ul>

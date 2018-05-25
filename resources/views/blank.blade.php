@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
   <title>{{ config('app.name') }}</title>
   <!-- Icons-->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -14,13 +14,13 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
-  
+
   @include('partials.header')
-  
+
   <div class="app-body">
-    
+
     @include('partials.sidebar')
-    
+
     <main class="main">
 
       <!-- Breadcrumb-->
@@ -29,9 +29,9 @@
 
         <!-- Breadcrumb Menu-->
         <li class="breadcrumb-menu d-md-down-none">
-        
+
           @yield('breadcrumb')
-      
+
         </li>
       </ol>
 
@@ -40,9 +40,9 @@
         <div class="animated fadeIn">
 
           @include('partials.errors')
-          
+
           @yield('content')
-          
+
         </div>
       </div>
 
@@ -56,6 +56,6 @@
   {{-- @include('toast::messages-jquery') --}}
 
   @stack('javascript')
-  
+
 </body>
 </html>

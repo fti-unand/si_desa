@@ -29,8 +29,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('users/deactivate/{id}', 'UserController@deactivate')->name('users.deactivate');
     Route::post('users/activate/{id}', 'UserController@activate')->name('users.activate');
     Route::resource('users', 'UserController');
-    Route::get('laporan', 'laporanController@index')->name('laporans.index');
-    Route::get('/print{id}','printController@print');
+    Route::get('laporan', 'LaporanController@index')->name('laporans.index');
+    Route::get('/print{id}','PrintController@print');
 });
 
 Route::get('image/{type}/{id}', 'FileController@image')->name('get.image');

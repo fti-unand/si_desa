@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Penduduk;
 use App\KartuKeluarga;
+use App\Nagari;
 
 
 class laporanController extends Controller
@@ -12,9 +13,13 @@ class laporanController extends Controller
     //
     public function index(){
 
-    	$penduduks = KartuKeluarga::all();
-    	// dd($penduduks);
+    	$kartukeluarga = KartuKeluarga::all();
 
-    	return view('laporans.index', compact('penduduks'));
+      $penduduk = Penduduk::all();
+      $hitungPenduduk = count($penduduk);
+
+      $nagari = Nagari::all();
+
+    	return view('laporans.index', compact('kartukeluarga','hitungPenduduk','nagari'));
     }
 }

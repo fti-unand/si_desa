@@ -38,11 +38,11 @@ class BeritaController extends Controller
         if ($request->hasFile('foto')) {
             $image = $request->file('foto');
             $fileName = "fileName".time().'.'.request()->foto->getClientOriginalExtension();
-            $destinationPath = storage_path('app/public/foto');
+            $destinationPath = public_path('foto');
             $imagePath = $destinationPath. "/".  $fileName;
             $image->move($destinationPath, $fileName);
         }
-        $berita->foto = 'storage/foto/'.$fileName;
+        $berita->foto = 'foto/'.$fileName;
         $berita->save();
 
         return redirect(route('beritas.index'));
@@ -71,8 +71,7 @@ public function edit($id)
         $request->validate([
             'judul' => 'required',
             'tanggal_terbit' => 'required',
-            'isi' => 'required',
-            'foto' => 'required'
+            'isi' => 'required'
         ]);
 
         $berita = Berita::find($id);
@@ -81,14 +80,14 @@ public function edit($id)
         $berita->tanggal_terbit = $request->input('tanggal_terbit');
         $berita->isi = $request->input('isi');
         if ($request->hasFile('foto')) {
-            Storage::delete(str_replace('storage', 'public', $berita->foto));
+            unlink(public_path($berita->foto));
             // Storage::delete('public/foto/fileName1526294333.png');
             $image = $request->file('foto');
             $fileName = "fileName".time().'.'.request()->foto->getClientOriginalExtension();
-            $destinationPath = storage_path('app/public/foto');
+            $destinationPath = public_path('foto');
             $imagePath = $destinationPath. "/".  $fileName;
             $image->move($destinationPath, $fileName);
-            $berita->foto = 'storage/foto/'.$fileName;
+            $berita->foto = 'foto/'.$fileName;
         }
         $berita->save();
 
@@ -105,7 +104,7 @@ public function edit($id)
     {
         $berita = Berita::find($id);
         if (isset($berita->foto)) {
-            Storage::delete(str_replace('storage', 'public', $berita->foto));
+            unlink(public_path($berita->foto));
         }
         $berita->delete();
         toast()->success('Berhasil menghapus data berita');

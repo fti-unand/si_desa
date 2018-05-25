@@ -21,6 +21,10 @@
 
 <div class="form-group">
     <label for="foto">Foto</label>
+    @isset($berita->foto)
+    <p>
+                <img src="{!! asset($berita->foto) !!}" style="max-width:800px;min-height:auto"></p>
+    @endisset            
     {{ Form::file('foto', ['class' => 'form-control'])}}
 </div>
 

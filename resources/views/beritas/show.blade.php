@@ -24,7 +24,7 @@
             <div class="card-body">
                 <p>Nagari <b>{!! $berita->nagari->nama !!}</b><br> Tanggal : <b>{!! $berita->tanggal_terbit !!}</b></p>
                 <p>
-                <img src="{!! asset($berita->foto) !!}"></p>
+                <img src="{!! asset($berita->foto) !!}" style="max-width:800px;min-height:auto"></p>
                 <p>
                     {!! $berita->isi !!}
                 </p>
@@ -40,7 +40,7 @@
 <script>
     function confirmDeletion(){
         if(confirm('Anda yakin akan menghapus user ini?')){
-            form = document.querySelector('form-delete');
+            var form = document.getElementById('form-delete');
             form.submit();
         }
     }
